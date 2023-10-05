@@ -25,18 +25,38 @@ class folder
 {
 private:
 	file* Files;
+
 	int maxFiles;
+	int maxFolders;
 	int fileCount;
+
+
 public:
-	folder(int maxFiles) : maxFiles(maxFiles), fileCount(0)
+	folder** Folders;
+	int folderCount;
+	std::string Name;
+	folder(int maxFiles, int maxFolders) : maxFiles(maxFiles), fileCount(0), maxFolders(maxFolders), folderCount(0)
 	{
 		Files = new file[maxFiles];
+		Folders = new folder*[maxFolders];
 	}
-
+	void display() {
+		std::cout << "Folder: " << Name << std::endl;
+	}
 	void addFile(const file& newFile) {
 		if (fileCount < maxFiles) {
 			Files[fileCount] = newFile;
 			fileCount++;
+		}
+		else {
+			std::cout << "Folder is full" << std::endl;
+		}
+	}
+
+	void addFolder(folder* newFolder) {
+		if (folderCount < maxFolders) {
+			Folders[folderCount] = newFolder;
+			folderCount++;
 		}
 		else {
 			std::cout << "Folder is full" << std::endl;
@@ -48,8 +68,11 @@ public:
 			Files[i].display();
 		}
 	}
-
-	std::string Name;
+	void displayFolders() {
+		for (int i = 0; i < folderCount; i++) {
+			Folders[i]->display();
+		}
+	}
 	void Rename(std::string n)
 	{
 		Name = n;

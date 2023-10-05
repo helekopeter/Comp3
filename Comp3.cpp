@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
 
-	folder root(5);
+	folder root(10,5);
 	string input;
 
 	do {
@@ -29,14 +29,41 @@ int main(){
 		{
 			file newfile;
 			string newname;
+			cout << "Name: ";
 			cin >> newname;
 			newfile.Rename(newname);
 			newfile.setSize(rand() % 100);
-			root.addFile(newfile);
+			string at;
+			cout << "What folder? (dont write anything for root)" << endl;
+			cin >> at;
+			folder* targetFolder = nullptr;
+			for (int i = 0; i < root.folderCount; i++) {
+				if (root.Folders[i]->Name == at) {
+					targetFolder = root.Folders[i];
+					break;
+				}
+			}
+
+			if (targetFolder != nullptr) {
+				targetFolder->addFile(newfile);
+			}
+			else {
+				cout << "Folder not found." << endl;
+			}
+		}
+		else if (input == "newfolder")
+		{
+			folder* newfolder = new folder(10,5);
+			string newname;
+			std::cout << "Name: ";
+			cin >> newname;
+			newfolder->Rename(newname);
+			root.addFolder(newfolder);
 		}
 		else if (input == "dir")
 		{
 			root.displayFiles();
+			root.displayFolders();
 		}
 	} while (input != "exit");
 }
