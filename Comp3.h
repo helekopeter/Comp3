@@ -71,6 +71,7 @@ public:
 	void displayFolders() {
 		for (int i = 0; i < folderCount; i++) {
 			Folders[i]->display();
+			Folders[i]->displayFiles();
 		}
 	}
 	void Rename(std::string n)
